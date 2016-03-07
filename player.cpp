@@ -15,7 +15,8 @@ Player::Player(Side side) {
      * 30 seconds.
      */
      
-     Board board;
+     board = Board();
+     this.side = side;
           
 }
 
@@ -49,5 +50,30 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
  * The last move is followed by an invalid move (-1, -1).
  */
 Move **Player::validMove(){
-    return NULL;
+	
+	Move ** valid_moves = new Move*[64];
+	int counter = 0;
+	
+	//Adds valid moves to array valid_moves
+	for(int i = 0; i < 8; i++)
+	{
+		for(int j = 0; j < 8; j++)
+		{
+			Move* newMove = new Move(i, j);
+			if(checkMove(newMove, side))
+			{
+				valid_moves[counter] = newMove;
+				counter++;
+			}
+			else
+			{
+				//Move is not valid. Move is thus not needed and is
+				// deleted.
+				delete(newMove);
+			}
+		}
+	}
+	valid_moves[counter] = new Move(-1, -1);
+	
+    return valid_moves;
 }
