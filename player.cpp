@@ -41,3 +41,13 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      */ 
     return NULL;
 }
+
+/**
+ * @brief Returns the set of valid moves that can be made on the board
+ * 
+ * @return The size of the set of valid moves will be sixty-four in size
+ * The last move is followed by an invalid move (-1, -1).
+ */
+Move *Player::validMove(){
+    return NULL;
+}
