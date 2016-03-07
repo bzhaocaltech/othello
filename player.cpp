@@ -60,7 +60,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // If the move was a valid move, update board and return it
     if (move->x >= 0)
     {
-        board.doMove(opponentsMove, side);
+        board.doMove(move, side);
         return move;
     }
     // Otherwise return NULL (there are no valid moves)
