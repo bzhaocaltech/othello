@@ -38,11 +38,7 @@ Player::~Player() {
  * return NULL.
  */
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
-    /* 
-     * TODO: Implement how moves your AI should play here. You should first
-     * process the opponent's opponents move before calculating your own move
-     */ 
-    return NULL;
+    // Update board
 }
 
 /**
@@ -51,6 +47,6 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
  * @return The size of the set of valid moves will be sixty-four in size
  * The last move is followed by an invalid move (-1, -1).
  */
-Move *Player::validMove(){
+Move **Player::validMove(){
     return NULL;
 }
