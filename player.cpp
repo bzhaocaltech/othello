@@ -39,6 +39,7 @@ Player::~Player() {
  */
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // Update board
+    board.doMove(opponentsMove);
 }
 
 /**
