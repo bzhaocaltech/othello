@@ -40,7 +40,10 @@ Player::~Player() {
  */
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // Update board
-    board.doMove(opponentsMove, side);
+    if (opponentsMove != NULL)
+    {
+        board.doMove(opponentsMove, side);
+    }
     
     // Find valid moves
     Move** valids = validMove();
