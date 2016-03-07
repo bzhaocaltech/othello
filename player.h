@@ -11,7 +11,7 @@ class Player {
 private:
     Board board;
     Move **validMove();
-
+    Side side;
 public:
     Player(Side side);
     ~Player();    
