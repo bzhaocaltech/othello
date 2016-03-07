@@ -36,7 +36,28 @@ Player::~Player() {
  */
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // Update board
-    board.doMove(opponentsMove);
+    board.doMove(opponentsMove, side);
+    
+    // Find valid moves
+    Move** valids = validMove();
+    
+    // Choose first move
+    Move* move = valids[0];
+    
+    // Free valids
+    for (int i = 0; i < 64; i++)
+    {
+        delete(valids + i);
+    }
+    
+    // If the move was a valid move, update board and return it
+    if (move->x >= 0)
+    {
+        board.doMove(opponentsMove, side);
+        return move;
+    }
+    // Otherwise return NULL (there are no valid moves)
+    return NULL;
 }
 
 /**
