@@ -8,16 +8,24 @@
 Player::Player(Side side) {
     // Will be set to true in test_minimax.cpp.
     testingMinimax = false;
-	
+
     /* 
      * TODO: Do any initialization you need to do here (setting up the board,
      * precalculating things, etc.) However, remember that you will only have
      * 30 seconds.
      */
      
-     board = Board();
-     this->side = side;
-          
+    board = Board();
+    this->side = side;
+    
+    if (side == BLACK)
+    {
+        opponentSide = WHITE;
+    }
+    else
+    {
+        opponentSide = BLACK;
+    }
 }
 
 /*
@@ -42,7 +50,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // Update board
     if (opponentsMove != NULL)
     {
-        board.doMove(opponentsMove, side);
+        board.doMove(opponentsMove, opponentSide);
     }
     
     // Find valid moves
@@ -54,7 +62,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // Free valids
     for (int i = 0; i < 64; i++)
     {
-        delete(valids + i);
+       delete(valids + i);
     }
     
     // If the move was a valid move, update board and return it
@@ -79,12 +87,12 @@ Move **Player::validMove(){
 	int counter = 0;
 	
 	//Adds valid moves to array valid_moves
-	for(int i = 0; i < 8; i++)
+	for (int i = 0; i < 8; i++)
 	{
-		for(int j = 0; j < 8; j++)
+		for (int j = 0; j < 8; j++)
 		{
 			Move* newMove = new Move(i, j);
-			if(board.checkMove(newMove, side))
+			if (board.checkMove(newMove, side))
 			{
 				valid_moves[counter] = newMove;
 				counter++;
