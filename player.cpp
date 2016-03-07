@@ -62,7 +62,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // Free valids
     for (int i = 0; i < 64; i++)
     {
-        delete(valids + i);
+       delete(valids + i);
     }
     
     // If the move was a valid move, update board and return it
@@ -101,7 +101,7 @@ Move **Player::validMove(){
 			{
 				//Move is not valid. Move is thus not needed and is
 				// deleted.
-				delete(newMove);
+				//delete(newMove);
 			}
 		}
 	}
