@@ -16,7 +16,7 @@ Player::Player(Side side) {
      */
      
      board = Board();
-     this.side = side;
+     this->side = side;
           
 }
 
@@ -81,7 +81,7 @@ Move **Player::validMove(){
 		for(int j = 0; j < 8; j++)
 		{
 			Move* newMove = new Move(i, j);
-			if(checkMove(newMove, side))
+			if(board.checkMove(newMove, side))
 			{
 				valid_moves[counter] = newMove;
 				counter++;
