@@ -9,10 +9,10 @@ using namespace std;
 #define ADJCORNER   0.5
 #define DIACORNER   0.25
 #define EDGE        2
-#define isEdge(x, y)        true
-#define isCorner(x, y)      true
-#define isAdjCorner(x, y)   true 
-#define isDiaCorner(x, y)   true
+#define isEdge(x, y)        (x == 0 || y == 0) 
+#define isCorner(x, y)      ((x == 0 && y == 0) || (x == 7 && y == 0) || (x == 0 && y == 7) || (x == 7 && y == 7))
+#define isAdjCorner(x, y)   (x == 1 && y == 0) || (x == 6 && y == 0) || (x == 0 && y == 1) || (x == 7 && y == 1) || (x == 0 && y == 6) || (x == 7 && y == 6) || (x == 1 && y == 7) || (x == 6 && y == 7)
+#define isDiaCorner(x, y)   (x == 1 && y == 1) || (x == 6 && y == 1) || (x == 1 && y == 6) || (x == 6 && y == 6)
 
 class Board {
    
