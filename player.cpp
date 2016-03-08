@@ -78,9 +78,9 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     }
     
     // If the move was a valid move, update board and return it
-    if (move->x >= 0)
+    if (best_move->x >= 0)
     {
-        board.doMove(move, side);
+        board.doMove(best_move, side);
         return best_move;
     }
     // Otherwise return NULL (there are no valid moves)
