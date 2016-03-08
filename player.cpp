@@ -18,14 +18,7 @@ Player::Player(Side side) {
     board = Board();
     this->side = side;
     
-    if (side == BLACK)
-    {
-        opponentSide = WHITE;
-    }
-    else
-    {
-        opponentSide = BLACK;
-    }
+    opponentSide = (side == BLACK) ? WHITE : BLACK;
 }
 
 /*
