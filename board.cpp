@@ -222,6 +222,7 @@ Move **Board::validMove(Side side){
 int Board::score(Move* move, Side side) {
     // Holds the board state after the move was made
     Board* newBoard = copy();
+    bool late_game = taken.count() > 40;
     newBoard->doMove(move, side);
     
     int score = 0;
@@ -236,13 +237,13 @@ int Board::score(Move* move, Side side) {
             // If square is occupied by the side, add to score
             if (newBoard->get(side, x, y))
             {
-                if (isCorner(x, y))
+                if (isCorner(x, y) && !late_game)
                     score += CORNER;
-                else if (isAdjCorner(x, y))
+                else if (isAdjCorner(x, y) && !late_game)
                     score += ADJCORNER;
-                else if (isEdge(x, y))
+                else if (isEdge(x, y) && !late_game)
                     score += EDGE;
-                else if (isDiaCorner(x, y))
+                else if (isDiaCorner(x, y) && !late_game)
                     score += DIACORNER;
                 else
                     score += 1;
