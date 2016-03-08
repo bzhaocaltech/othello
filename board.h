@@ -5,9 +5,14 @@
 #include "common.h"
 using namespace std;
 
-#define CORNER  3
+#define CORNER      3
 #define ADJCORNER   0.5
-#define EDGE    2
+#define DIACORNER   0.25
+#define EDGE        2
+#define isEdge(x, y)        true
+#define isCorner(x, y)      true
+#define isAdjCorner(x, y)   true 
+#define isDiaCorner(x, y)   true
 
 class Board {
    
