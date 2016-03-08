@@ -6,8 +6,8 @@
 using namespace std;
 
 #define CORNER      4
-#define ADJCORNER   0.5
-#define DIACORNER   0.25
+#define ADJCORNER   0
+#define DIACORNER   0
 #define EDGE        2
 #define isEdge(x, y)        (x == 0 || y == 0 || x == 7 || y == 7)
 #define isCorner(x, y)      ((x == 0 && (y == 0 || y == 7)) || \
