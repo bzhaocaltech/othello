@@ -213,11 +213,62 @@ Move **Board::validMove(Side side){
 	
     return valid_moves;
 }
-
 /**
- * @brief Finds the score of a given board. Uses defines in board.h
+ * @brief Finds the score of the board at the current moment. Gives the
+ * score of the side
  * 
  * @return Returns the score
+ */
+int Board::score(Side side) {
+    int score = 0;
+    
+    Side other = (side == BLACK) ? WHITE : BLACK;
+    
+    // Loop through the entire board
+    for (int x = 0; x < 8; x++)
+    {
+        for (int y = 0; y < 8; y++)
+        {
+            // If square is occupied by the side, add to score
+            if (get(side, x, y))
+            {
+                if (isCorner(x, y))
+                    score += CORNER;
+                else if (isAdjCorner(x, y))
+                    score += ADJCORNER;
+                else if (isEdge(x, y))
+                    score += EDGE;
+                else if (isDiaCorner(x, y))
+                    score += DIACORNER;
+                else
+                    score += 1;
+            }
+            // If the square is occupied by the other side, subtract
+            // from score
+            else if (get(other, x, y))
+            {
+                if (isCorner(x, y))
+                    score -= CORNER;
+                else if (isAdjCorner(x, y))
+                    score -= ADJCORNER;
+                else if (isEdge(x, y))
+                    score -= EDGE;
+                else if (isDiaCorner(x, y))
+                    score -= DIACORNER;
+                else
+                    score -= 1;
+            }
+        }
+    }
+    
+    return score;
+}
+
+/**
+ * @brief Finds the score of a given board after the move has been made. 
+ * Uses defines in board.h. Gives the score of the side.
+ * 
+ * @return Returns the score after a certain move has been made
  */
 int Board::score(Move* move, Side side) {
     // Holds the board state after the move was made

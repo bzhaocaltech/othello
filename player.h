@@ -21,4 +21,23 @@ public:
     bool testingMinimax;
 };
 
+class Node { 
+public:
+    Node* parent;
+    int score;
+    Board* board;
+    Move* move;
+    Node(Board* board, Side side)
+    {
+        this->board = board;
+        score = board->score(side);
+        move = NULL;
+    }
+    Node(Board* board, Move* move, Side side)
+    {
+        this->board = board;
+        score = board->score(side);
+    }
+};
+
 #endif
