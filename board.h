@@ -29,7 +29,7 @@ public:
     Board();
     ~Board();
     Board *copy();
-    int score(Move* move);
+    int score(Move* move, Side side);
     Move** validMove(Side side);
     bool isDone();
     bool hasMoves(Side side);

@@ -219,6 +219,8 @@ Move **Board::validMove(Side side){
  * 
  * @return Returns the score
  */
-int Board::score(Move* move) {
-    return 0;
+int Board::score(Move* move, Side side) {
+    // Holds the board state after the move was made
+    Board* newBoard = this->copy();
+    newBoard->doMove(move, side);
 }
