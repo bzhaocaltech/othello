@@ -49,8 +49,8 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // Find valid moves
     Move** valids = board.validMove(side);
     
-    int highest_score = board.score(valids[0], side); 
-    int counter = 1;
+    int highest_score = -9999; 
+    int counter = 0;
     Move *best_move = valids[0];
     
     while (valids[counter]->x != -1)
