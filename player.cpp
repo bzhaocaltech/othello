@@ -50,21 +50,38 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     Move** valids = board.validMove(side);
     
     // Choose first move
-    Move* move = valids[0];
+    //Move* move = valids[0];
+    
+    int highest_score = 0; 
+    int counter = 0;
+    Move *best_move = valids[counter];
+    
+    while (valids[counter]->x != -1)
+    {
+		if(highest_score < board.score(valids[counter], side))
+		{
+			best_move = valids[counter];
+			highest_score = board.score(valids[counter], side);
+		}
+		counter++;
+	}
     
     // Free valids
-    int i = 1;
+    int i = 0;
     while (valids[i] != NULL)
     {
-       delete(valids[i]);
-       i++;
+        if(valids[i] != best_move)
+        {
+            delete(valids[i]);
+        }
+        i++;
     }
     
     // If the move was a valid move, update board and return it
     if (move->x >= 0)
     {
         board.doMove(move, side);
-        return move;
+        return best_move;
     }
     // Otherwise return NULL (there are no valid moves)
     return NULL;
