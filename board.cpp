@@ -219,6 +219,6 @@ Move **Board::validMove(Side side){
  * 
  * @return Returns the score
  */
-int Board::score() {
+int Board::score(Move* move) {
     return 0;
 }
