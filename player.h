@@ -10,7 +10,6 @@ class Player {
 
 private:
     Board board;
-    Move **validMove();
     Side side;
     Side opponentSide;
 public:

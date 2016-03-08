@@ -180,6 +180,41 @@ void Board::setBoard(char data[]) {
 }
 
 /**
+ * @brief Returns the set of valid moves that can be made on the board
+ * 
+ * @return The size of the set of valid moves will be sixty-four in size
+ * The last move is followed by an invalid move (-1, -1).
+ */
+Move **Board::validMove(Side side){
+	
+	Move ** valid_moves = new Move*[64];
+	int counter = 0;
+	
+	//Adds valid moves to array valid_moves
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			Move* newMove = new Move(i, j);
+			if (this->checkMove(newMove, side))
+			{
+				valid_moves[counter] = newMove;
+				counter++;
+			}
+			else
+			{
+				//Move is not valid. Move is thus not needed and is
+				// deleted.
+				delete(newMove);
+			}
+		}
+	}
+	valid_moves[counter] = new Move(-1, -1);
+	
+    return valid_moves;
+}
+
+/**
  * @brief Finds the score of a given board. Uses defines in board.h
  * 
  * @return Returns the score
