@@ -238,10 +238,10 @@ int Board::score(Move* move, Side side) {
             {
                 if (isCorner(x, y))
                     score += CORNER;
-                else if (isEdge(x, y))
-                    score += EDGE;
                 else if (isAdjCorner(x, y))
                     score += ADJCORNER;
+                else if (isEdge(x, y))
+                    score += EDGE;
                 else if (isDiaCorner(x, y))
                     score += DIACORNER;
                 else
@@ -253,10 +253,10 @@ int Board::score(Move* move, Side side) {
             {
                 if (isCorner(x, y))
                     score -= CORNER;
-                else if (isEdge(x, y))
-                    score -= EDGE;
                 else if (isAdjCorner(x, y))
                     score -= ADJCORNER;
+                else if (isEdge(x, y))
+                    score -= EDGE;
                 else if (isDiaCorner(x, y))
                     score -= DIACORNER;
                 else
@@ -264,6 +264,7 @@ int Board::score(Move* move, Side side) {
             }
         }
     }
+    delete(newBoard);
     
     return score;
 }

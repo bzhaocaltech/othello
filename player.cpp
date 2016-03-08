@@ -49,19 +49,16 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // Find valid moves
     Move** valids = board.validMove(side);
     
-    // Choose first move
-    //Move* move = valids[0];
-    
-    int highest_score = 0; 
-    int counter = 0;
-    Move *best_move = valids[counter];
+    int highest_score = board.score(valids[0], side); 
+    int counter = 1;
+    Move *best_move = valids[0];
     
     while (valids[counter]->x != -1)
     {
 		if(highest_score < board.score(valids[counter], side))
 		{
-			best_move = valids[counter];
 			highest_score = board.score(valids[counter], side);
+			best_move = valids[counter];
 		}
 		counter++;
 	}
