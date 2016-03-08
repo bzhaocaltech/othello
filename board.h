@@ -5,7 +5,7 @@
 #include "common.h"
 using namespace std;
 
-#define CORNER      3
+#define CORNER      4
 #define ADJCORNER   0.5
 #define DIACORNER   0.25
 #define EDGE        2

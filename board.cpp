@@ -221,6 +221,49 @@ Move **Board::validMove(Side side){
  */
 int Board::score(Move* move, Side side) {
     // Holds the board state after the move was made
-    Board* newBoard = this->copy();
+    Board* newBoard = copy();
     newBoard->doMove(move, side);
+    
+    int score = 0;
+    
+    Side other = (side == BLACK) ? WHITE : BLACK;
+    
+    // Loop through the entire board
+    for (int x = 0; x < 8; x++)
+    {
+        for (int y = 0; y < 8; y++)
+        {
+            // If square is occupied by the side, add to score
+            if (newBoard->get(side, x, y))
+            {
+                if (isCorner(x, y))
+                    score += CORNER;
+                else if (isEdge(x, y))
+                    score += EDGE;
+                else if (isAdjCorner(x, y))
+                    score += ADJCORNER;
+                else if (isDiaCorner(x, y))
+                    score += DIACORNER;
+                else
+                    score += 1;
+            }
+            // If the square is occupied by the other side, subtract
+            // from score
+            else if (newBoard->get(other, x, y))
+            {
+                if (isCorner(x, y))
+                    score -= CORNER;
+                else if (isEdge(x, y))
+                    score -= EDGE;
+                else if (isAdjCorner(x, y))
+                    score -= ADJCORNER;
+                else if (isDiaCorner(x, y))
+                    score -= DIACORNER;
+                else
+                    score -= 1;
+            }
+        }
+    }
+    
+    return score;
 }
