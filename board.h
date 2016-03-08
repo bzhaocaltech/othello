@@ -34,6 +34,7 @@ public:
     Board();
     ~Board();
     Board *copy();
+    Board* newBoardMove(Move* move, Side side);
     int score(Move* move, Side side);
     int score(Side side);
     Move** validMove(Side side);
@@ -44,7 +45,8 @@ public:
     int count(Side side);
     int countBlack();
     int countWhite();
-
+    
+    
     void setBoard(char data[]);
 };
 

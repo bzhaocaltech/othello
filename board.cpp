@@ -265,6 +265,18 @@ int Board::score(Side side) {
 }
 
 /**
+ * @brief Copies the old board. Then makes a move on the new board.
+ * Returns the board after the move has been made
+ * 
+ * @return A new board with a given move done on it
+ */
+Board* Board::newBoardMove(Move* move, Side side) {
+    Board* newBoard = this->copy();
+    newBoard->doMove(move, side);
+    return newBoard;
+}
+
+/**
  * @brief Finds the score of a given board after the move has been made. 
  * Uses defines in board.h. Gives the score of the side.
  * 
