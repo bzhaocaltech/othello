@@ -5,6 +5,10 @@
 #include "common.h"
 using namespace std;
 
+#define CORNER  3
+#define ADJCORNER   0.5
+#define EDGE    2
+
 class Board {
    
 private:
@@ -20,7 +24,7 @@ public:
     Board();
     ~Board();
     Board *copy();
-        
+    int score();
     bool isDone();
     bool hasMoves(Side side);
     bool checkMove(Move *m, Side side);

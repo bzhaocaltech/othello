@@ -178,3 +178,12 @@ void Board::setBoard(char data[]) {
         }
     }
 }
+
+/**
+ * @brief Finds the score of a given board. Uses defines in board.h
+ * 
+ * @return Returns the score
+ */
+int Board::score() {
+    return 0;
+}
