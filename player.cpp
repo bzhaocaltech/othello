@@ -7,7 +7,7 @@
  */
 Player::Player(Side side) {
     // Will be set to true in test_minimax.cpp.
-    testingMinimax = false;
+    testingMinimax = true;
 
     /* 
      * TODO: Do any initialization you need to do here (setting up the board,
@@ -15,7 +15,7 @@ Player::Player(Side side) {
      * 30 seconds.
      */
      
-    board = Board();
+    board = new Board();
     this->side = side;
     
     opponentSide = (side == BLACK) ? WHITE : BLACK;
@@ -43,43 +43,39 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     // Update board
     if (opponentsMove != NULL)
     {
-        board.doMove(opponentsMove, opponentSide);
+        board->doMove(opponentsMove, opponentSide);
     }
     
-    // Find valid moves
-    Move** valids = board.validMove(side);
-    
-    int highest_score = -9999; 
-    int counter = 0;
-    Move *best_move = valids[0];
-    
-    while (valids[counter]->x != -1)
+    // Create the head node (represents the current board)
+    Node* head = new Node(board, side);
+    // Create children node for the head node (represent each possible
+    // move we have)
+    head->makeChildren(side, side);
+    // For each of the children node, have it analyze all moves opponent 
+    // can make
+    for (int i = 0 ; i < head->numOfChildren; i++)
     {
-		if(highest_score < board.score(valids[counter], side))
-		{
-			highest_score = board.score(valids[counter], side);
-			best_move = valids[counter];
-		}
-		counter++;
+		head->children[i]->makeChildren(opponentSide, side);
+		head->children[i]->worstChild();
 	}
-    
-    // Free valids
-    int i = 0;
-    while (valids[i] != NULL)
-    {
-        if(valids[i] != best_move)
-        {
-            delete(valids[i]);
-        }
-        i++;
-    }
-    
-    // If the move was a valid move, update board and return it
-    if (best_move->x >= 0)
-    {
-        board.doMove(best_move, side);
-        return best_move;
-    }
-    // Otherwise return NULL (there are no valid moves)
-    return NULL;
+	int score = -9999;
+	Move* move = NULL;
+	// Find the child node with the best score. Make move that child's
+	// move
+	for (int i = 0 ; i < head->numOfChildren; i++)
+	{
+		if (head->children[i]->score > score)
+		{
+			score = head->children[i]->score;
+			move = head->children[i]->move;
+		}
+	}
+	
+	if (move != NULL)
+	{
+		board->doMove(move, side);
+		return move;
+	}
+	
+	return NULL;
 }

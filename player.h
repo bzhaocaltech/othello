@@ -9,7 +9,7 @@ using namespace std;
 class Player {
 
 private:
-    Board board;
+    Board* board;
     Side side;
     Side opponentSide;
 public:
@@ -39,11 +39,12 @@ public:
     }
     // Makes a new node. The board stored in this new node is the board
     // passed to it after a given move has been preformed.
-    Node(Board* board, Move* move, Side side)
+    Node(Board* board, Move* move, Side moveSide, Side scoreSide)
     {
-        this->board = board->newBoardMove(move, side);
-        score = (this->board)->score(side);
+        this->board = board->newBoardMove(move, moveSide);
+        score = (this->board)->score(scoreSide);
         this->move = move;
+        children = new Node*[64];
         numOfChildren = 0;
     }
     ~Node()
@@ -51,33 +52,39 @@ public:
         delete(board);
         delete(move);
     }
-    // Makes the children of this node. Side here represents the side
-    // that was not used to create this node
-    void makeChildren(Side side)
+    // Makes the children of this node.
+    void makeChildren(Side moveSide, Side scoreSide)
     {
         // Find valid moves
-        Move** valids = board->validMove(side);
+        Move** valids = board->validMove(moveSide);
         int counter = 0;
         // Create a new node for each valid move
         while (valids[counter]->x != -1)
         {
-            children[numOfChildren] = new Node(board, valids[counter], side);
+            children[numOfChildren] = new Node(board, valids[counter], moveSide, scoreSide);
             numOfChildren++;
             counter++;
         }
     }
-    // Returns the score of the worst child.
-    int worstChild()
+    // Replaces the score of this node with the score of its worst child
+    void worstChild()
     {
-        int worstChildScore = children[0]->score;
-        for (int i = 1; i < numOfChildren; i++)
+        if (numOfChildren == 0)
         {
-            if (children[i]->score <= worstChildScore)
-            {
-                worstChildScore = children[i]->score;
-            }
+            // Do nothing
         }
-        return worstChildScore;
+        else
+        {
+            int worstChildScore = -999;
+            for (int i = 0; i < numOfChildren; i++)
+            {
+                if (children[i]->score <= worstChildScore)
+                {
+                    worstChildScore = children[i]->score;
+                }
+            }
+            score = worstChildScore;
+        }
     }
 };
 
