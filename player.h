@@ -22,17 +22,34 @@ public:
 };
 
 class Node { 
-public:
+private:
+    // Contains all the children of the node
     Node** children;
+    // The number of nodes contained in children
     int numOfChildren;
+    // The score of the board in this node
     int score;
+    // The side from which score is calculated from
+    Side side;
+    // The side that should move next
+    Side nextSide;
+    // The board that this node represents
     Board* board;
+    // The move that was made to get to this board
     Move* move;
+public:
     Node(Board* board, Side side);
     Node(Board* board, Move* move, Side moveSide, Side scoreSide);
     ~Node();
-    void makeChildren(Side moveSide, Side scoreSide);
+    void deleteAll();
+    void makeChildren(int depth);
     void worstChild();
+    int getScore();
+    Move* getMove();
+    int bestMove();
+    Node* advance();
+    Node* advance(Move* opponentsMove);
+    void extend();
 };
 
 #endif
