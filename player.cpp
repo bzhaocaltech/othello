@@ -15,10 +15,13 @@ Player::Player(Side side) {
      * 30 seconds.
      */
      
-    board = new Board();
     this->side = side;
     
     opponentSide = (side == BLACK) ? WHITE : BLACK;
+    
+    Node* head = new Node(new Board(), side);
+    // Make a depth two tree
+    head->makeChildren(2);
 }
 
 /*
@@ -40,7 +43,21 @@ Player::~Player() {
  * return NULL.
  */
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
-    return NULL;
+    Node* newHead;
+    
+    // Update opponents move
+    if (opponentsMove != NULL)
+    {
+        newHead = head->advance(opponentsMove);
+        delete(head);
+        head = newHead;
+    }
+    
+    newHead = head->advance();
+    delete(head);
+    head = newHead;
+    
+    return (head->getMove());
 }
 
 // Creates a new node object.
@@ -106,7 +123,7 @@ void Node::makeChildren(int depth)
         int counter = 0;
     
         // Create a new child node for each valid move
-        while (valids[counter] != NULL)
+        while (valids[counter]->x != -1)
         {
             children[counter] = new Node(board, valids[counter], nextSide , side);
         

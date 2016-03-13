@@ -6,21 +6,6 @@
 #include "board.h"
 using namespace std;
 
-class Player {
-
-private:
-    Board* board;
-    Side side;
-    Side opponentSide;
-public:
-    Player(Side side);
-    ~Player();    
-    Move *doMove(Move *opponentsMove, int msLeft);
-
-    // Flag to tell if the player is running within the test_minimax context
-    bool testingMinimax;
-};
-
 class Node { 
 private:
     // Contains all the children of the node
@@ -37,6 +22,8 @@ private:
     Board* board;
     // The move that was made to get to this board
     Move* move;
+    // Contains the head of the minmax tree
+    Node* head;
 public:
     Node(Board* board, Side side);
     Node(Board* board, Move* move, Side moveSide, Side scoreSide);
@@ -51,5 +38,22 @@ public:
     Node* advance(Move* opponentsMove);
     void extend();
 };
+
+class Player {
+
+private:
+    Side side;
+    Side opponentSide;
+    Node* head;
+public:
+    Player(Side side);
+    ~Player();    
+    Move *doMove(Move *opponentsMove, int msLeft);
+
+    // Flag to tell if the player is running within the test_minimax context
+    bool testingMinimax;
+};
+
+
 
 #endif
