@@ -53,11 +53,14 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         head = newHead;
     }
     
-    newHead = head->advance();
-    delete(head);
+    
+    //newHead = head->advance();
+    //delete(head);
     head = newHead;
     
-    return (head->getMove());
+    //return (head->getMove());
+    Board *b = new Board();
+    return b->validMove(side)[0];
 }
 
 // Creates a new node object.
@@ -120,18 +123,17 @@ void Node::makeChildren(int depth)
     if (depth != 0)
     {
         Move** valids = board->validMove(nextSide);
-        int counter = 0;
     
         // Create a new child node for each valid move
-        while (valids[counter]->x != -1)
+        while (valids[numOfChildren]->x != -1)
         {
-            children[counter] = new Node(board, valids[counter], nextSide , side);
+            children[numOfChildren] = new Node(board, valids[numOfChildren], nextSide , side);
         
             // Recursively get each of the child nodes to create there own children
-            children[counter]->makeChildren(depth - 1);
+            children[numOfChildren]->makeChildren(depth - 1);
         
             // Update counter to continue iterating through the loop
-            counter++;
+            numOfChildren++;
         }
     }
 }
@@ -169,7 +171,7 @@ void Node::worstChild()
 int Node::bestMove()
 {
     int bestScore = -9999;
-    int index = -1;
+    int index = 0;
     for (int i = 0; i < numOfChildren; i++)
     {
         if (bestScore < children[i]->getScore())
@@ -211,18 +213,18 @@ Move* Node::getMove()
 // branches of the tree and returns that node (which becomes the new head)
 Node* Node::advance()
 {
-    int index = bestMove();
-    for (int i = 0; i < numOfChildren; i++)
-    {
+    //int index = bestMove();
+    //for (int i = 0; i < numOfChildren; i++)
+    //{
         // Delete all other branches
-        if (i != index)
-        {
-            children[i]->deleteAll();
-        }
-    }
+        //if (i != index)
+        //{
+            //children[i]->deleteAll();
+        //}
+    //}
     // Extend the current tree by one
-    this->extend();
-    return(children[index]);
+    //this->extend();
+    return(this->children[0]); //return children[index];
 }
 
 // (Use this version of advance only when opponent is about to move)
@@ -250,6 +252,7 @@ Node* Node::advance(Move* opponentsMove)
             children[i]->deleteAll();
         }
     }
+    
     // Extend the current tree by one
     this->extend();
     return(children[counter]);
