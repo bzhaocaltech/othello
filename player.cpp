@@ -21,7 +21,7 @@ Player::Player(Side side) {
     
     opponentSide = (side == BLACK) ? WHITE : BLACK;
     
-    Node* head = new Node(new Board(), side);
+    head = new Node(new Board(), side);
     // Make a depth two tree
     head->makeChildren(2);
 }
@@ -59,13 +59,11 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     }
     
     
-    //newHead = head->advance();
+    newHead = head->advance();
     //delete(head);
     head = newHead;
     
-    //return (head->getMove());
-    Board *b = new Board();
-    return b->validMove(side)[0];
+    return (head->getMove());
 }
 
 // Creates a new node object.
@@ -261,7 +259,7 @@ Node* Node::advance(Move* opponentsMove)
         }
         counter++;
     }
-    
+    counter--;
     for (int i = 0; i < numOfChildren; i++)
     {
         // Delete all other branches
