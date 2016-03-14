@@ -8,10 +8,8 @@ using namespace std;
 
 class Node { 
 private:
-    // Contains all the children of the node
-    Node** children;
-    // The number of nodes contained in children
-    int numOfChildren;
+    
+    
     // The score of the board in this node
     int score;
     // The side from which score is calculated from
@@ -25,6 +23,12 @@ private:
     // Contains the head of the minmax tree
     Node* head;
 public:
+    // Contains all the children of the node
+    Node** children;
+    
+    // The number of nodes contained in children
+    int numOfChildren;
+    
     Node(Board* board, Side side);
     Node(Board* board, Move* move, Side moveSide, Side scoreSide);
     ~Node();

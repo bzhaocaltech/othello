@@ -1,4 +1,6 @@
 #include "player.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
  * Constructor for the player; initialize everything here. The side your AI is
@@ -44,6 +46,9 @@ Player::~Player() {
  */
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
     Node* newHead;
+    
+    fprintf(stderr, "%d\n", head->numOfChildren);
+    fprintf(stderr, "%d\n", head->children[3]->numOfChildren);
     
     // Update opponents move
     if (opponentsMove != NULL)
@@ -100,7 +105,10 @@ Node::Node(Board* board, Move* move, Side moveSide, Side scoreSide)
 Node::~Node()
 {
     delete(board);
-    delete(move);
+    if (move != NULL)
+    {
+        delete(move);
+    }
 }
 
 // Alternative destructor. Deletes all child nodes in addition to the
@@ -111,27 +119,26 @@ void Node::deleteAll()
 	{
 		children[i]->deleteAll();
 	}
-    delete(this);
+    //delete(this);
 }
 
 // Makes the children of this node to a certain depth
 void Node::makeChildren(int depth)
 {
-    if (depth != 0)
+    if (depth > 0)
     {
         Move** valids = board->validMove(nextSide);
-        int counter = 0;
     
         // Create a new child node for each valid move
-        while (valids[counter]->x != -1)
+        while (valids[numOfChildren]->x != -1)
         {
-            children[counter] = new Node(board, valids[counter], nextSide , side);
+            children[numOfChildren] = new Node(board, valids[numOfChildren], nextSide, side);
         
             // Recursively get each of the child nodes to create there own children
-            children[counter]->makeChildren(depth - 1);
+            children[numOfChildren]->makeChildren(depth - 1);
         
-            // Update counter to continue iterating through the loop
-            counter++;
+            // Update numOfChildren to continue iterating through the loop
+            numOfChildren++;
         }
     }
 }
@@ -169,7 +176,7 @@ void Node::worstChild()
 int Node::bestMove()
 {
     int bestScore = -9999;
-    int index = -1;
+    int index = 0;
     for (int i = 0; i < numOfChildren; i++)
     {
         if (bestScore < children[i]->getScore())
@@ -211,8 +218,9 @@ Move* Node::getMove()
 // branches of the tree and returns that node (which becomes the new head)
 Node* Node::advance()
 {
+    this->worstChild();
     int index = bestMove();
-    for (int i = 0; i < numOfChildren; i++)
+        for (int i = 0; i < numOfChildren; i++)
     {
         // Delete all other branches
         if (i != index)
@@ -220,9 +228,18 @@ Node* Node::advance()
             children[i]->deleteAll();
         }
     }
+    
+    // Make the only branch left the first branch
+    numOfChildren = 1;
+    children[0] = children[index];
+    if (index != 0)
+    {
+        children[index] = NULL;
+    }
+    
     // Extend the current tree by one
     this->extend();
-    return(children[index]);
+    return(children[0]);
 }
 
 // (Use this version of advance only when opponent is about to move)
@@ -250,7 +267,16 @@ Node* Node::advance(Move* opponentsMove)
             children[i]->deleteAll();
         }
     }
+    
+    // Make the only branch left the first branch
+    numOfChildren = 1;
+    children[0] = children[counter];
+    if (counter != 0)
+    {
+        children[counter] = NULL;
+    }
+    
     // Extend the current tree by one
     this->extend();
-    return(children[counter]);
+    return(children[0]);
 }
