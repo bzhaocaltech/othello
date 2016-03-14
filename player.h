@@ -8,8 +8,6 @@ using namespace std;
 
 class Node { 
 private:
-    
-    
     // The score of the board in this node
     int score;
     // The side from which score is calculated from
@@ -20,8 +18,6 @@ private:
     Board* board;
     // The move that was made to get to this board
     Move* move;
-    // Contains the head of the minmax tree
-    Node* head;
 public:
     // Contains all the children of the node
     Node** children;

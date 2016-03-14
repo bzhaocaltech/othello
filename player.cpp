@@ -23,13 +23,14 @@ Player::Player(Side side) {
     
     head = new Node(new Board(), side);
     // Make a depth two tree
-    head->makeChildren(2);
+    head->makeChildren(4);
 }
 
 /*
  * Destructor for the player.
  */
 Player::~Player() {
+    head->deleteAll();
 }
 
 /*
@@ -47,14 +48,11 @@ Player::~Player() {
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
     Node* newHead;
     
-    fprintf(stderr, "%d\n", head->numOfChildren);
-    fprintf(stderr, "%d\n", head->children[3]->numOfChildren);
-    
     // Update opponents move
     if (opponentsMove != NULL)
     {
         newHead = head->advance(opponentsMove);
-        delete(head);
+        //delete(head);
         head = newHead;
     }
     
@@ -226,7 +224,7 @@ Node* Node::advance()
         // Delete all other branches
         if (i != index)
         {
-            children[i]->deleteAll();
+           children[i]->deleteAll();
         }
     }
     
@@ -257,9 +255,11 @@ Node* Node::advance(Move* opponentsMove)
         {
             done = 1;
         }
-        counter++;
+        else
+        {
+            counter++;
+        }
     }
-    counter--;
     for (int i = 0; i < numOfChildren; i++)
     {
         // Delete all other branches
