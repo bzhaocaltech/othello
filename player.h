@@ -48,6 +48,7 @@ private:
     Side side;
     Side opponentSide;
     Node* head;
+    int firstMove;
 public:
     Player(Side side);
     ~Player();    

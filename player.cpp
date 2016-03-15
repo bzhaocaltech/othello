@@ -111,10 +111,6 @@ Node::Node(Board* board, Move* move, Side moveSide, Side scoreSide)
 Node::~Node()
 {
     delete(board);
-    if (move != NULL)
-    {
-        delete(move);
-    }
 }
 
 // Alternative destructor. Deletes all child nodes in addition to the
@@ -125,7 +121,7 @@ void Node::deleteAll()
 	{
 		children[i]->deleteAll();
 	}
-    // delete(this);
+    delete(this);
 }
 
 // Makes the children of this node to a certain depth
@@ -154,9 +150,8 @@ void Node::makeChildren(int depth)
             {
                 children[0] = new Node(board->copy(), NULL, nextSide, side);
             }
-            children[0]->makeChildren(1);
-            numOfChildren++;
-            fprintf(stderr, "hi");
+            // children[0]->makeChildren(1);
+            numOfChildren = 1;
         }
     }
 }
