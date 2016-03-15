@@ -62,7 +62,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         delete(head);
         head = newHead;
     }
-        
+    
     newHead = head->advance();
     delete(head);
     head = newHead;
