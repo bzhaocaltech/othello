@@ -316,11 +316,11 @@ int Board::score(Move* move, Side side) {
             else if (newBoard->get(other, x, y))
             {
                 if (isCorner(x, y))
-                    score -= CORNER;
+                    score -= (CORNER + 3);
                 else if (isAdjCorner(x, y))
                     score -= ADJCORNER;
                 else if (isEdge(x, y))
-                    score -= EDGE;
+                    score -= (EDGE + 2);
                 else if (isDiaCorner(x, y))
                     score -= DIACORNER;
                 else
