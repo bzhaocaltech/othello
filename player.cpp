@@ -30,7 +30,7 @@ Player::Player(Side side) {
         head = new Node(new Board(), side, opponentSide);
     }
     // Make a depth two tree
-    head->makeChildren(2);
+    head->makeChildren(4);
     firstMove = 1;
 }
 
