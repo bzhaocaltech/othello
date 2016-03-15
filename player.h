@@ -10,14 +10,17 @@ class Node {
 private:
     // The score of the board in this node
     int score;
+    
     // The side from which score is calculated from
     Side side;
     // The side that should move next
     Side nextSide;
+
     // The board that this node represents
     Board* board;
     // The move that was made to get to this board
     Move* move;
+
     // Contains all the children of the node
     Node** children;
     // The number of nodes contained in children

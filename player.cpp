@@ -69,7 +69,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     newHead = head->advance();
     delete(head);
     head = newHead;
-    
+   
     if (head == NULL)
     {
         return NULL;
@@ -189,6 +189,14 @@ void Node::worstChild()
         }
         // Finally, update this node's score to the worst score
         score = worstScore;
+        if(nextSide == side)
+        {
+            score += numOfChildren/3;
+        }
+        else
+        {
+            score -= numOfChildren/3;
+        }
     }
 }
 

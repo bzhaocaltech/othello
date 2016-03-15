@@ -5,10 +5,10 @@
 #include "common.h"
 using namespace std;
 
-#define CORNER      4
+#define CORNER      5
 #define ADJCORNER   1
 #define DIACORNER   1
-#define EDGE        2
+#define EDGE        3
 #define isEdge(x, y)        (x == 0 || y == 0 || x == 7 || y == 7)
 #define isCorner(x, y)      ((x == 0 && (y == 0 || y == 7)) || \
                             (x == 7 && (y == 0 || y == 7)))
