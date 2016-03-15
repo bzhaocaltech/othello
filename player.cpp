@@ -67,6 +67,11 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     delete(head);
     head = newHead;
     
+    if (head == NULL)
+    {
+        return NULL;
+    }
+    
     return (head->getMove());
 }
 
@@ -230,6 +235,11 @@ Move* Node::getMove()
 // branches of the tree and returns that node (which becomes the new head)
 Node* Node::advance()
 {
+    // There are no children and thus no moves to be made. The game is over
+    if (numOfChildren == 0)
+    {
+        return NULL;
+    }
     this->worstChild();
     int index = bestMove();
     for (int i = 0; i < numOfChildren; i++)
@@ -258,6 +268,11 @@ Node* Node::advance()
 // Advances the tree base on which move the opponent made
 Node* Node::advance(Move* opponentsMove)
 {
+    // There are no children and thus no moves to be made. The game is over
+    if (numOfChildren == 0)
+    {
+        return NULL;
+    }
     int done = 0;
     int counter = 0;
     while(!done)
