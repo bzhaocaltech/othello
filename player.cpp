@@ -23,7 +23,7 @@ Player::Player(Side side) {
     
     head = new Node(new Board(), side);
     // Make a depth two tree
-    head->makeChildren(4);
+    head->makeChildren(2);
 }
 
 /*
@@ -55,12 +55,12 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         //delete(head);
         head = newHead;
     }
-    
-    
+        
     newHead = head->advance();
     //delete(head);
     head = newHead;
     
+
     return (head->getMove());
 }
 
