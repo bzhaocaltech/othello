@@ -20,14 +20,12 @@ private:
     Board* board;
     // The move that was made to get to this board
     Move* move;
-public:
-    
+
     // Contains all the children of the node
     Node** children;
-    
     // The number of nodes contained in children
     int numOfChildren;
-    
+public:
     Node(Board* board, Side side, Side moveSide);
     Node(Board* board, Move* move, Side moveSide, Side scoreSide);
     ~Node();
