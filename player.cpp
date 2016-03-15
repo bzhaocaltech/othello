@@ -30,7 +30,8 @@ Player::Player(Side side) {
         head = new Node(new Board(), side, opponentSide);
     }
     // Make a depth two tree
-    head->makeChildren(4);
+    head->makeChildren(2);
+    firstMove = 1;
 }
 
 /*
@@ -56,12 +57,14 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     Node* newHead;
     
     // Update opponents move
-    if (opponentsMove != NULL)
+    if (!(opponentsMove == NULL && firstMove))
     {
         newHead = head->advance(opponentsMove);
         delete(head);
         head = newHead;
     }
+    
+    firstMove = 0;
     
     newHead = head->advance();
     delete(head);
@@ -254,10 +257,6 @@ Node* Node::advance()
     // Make the only branch left the first branch
     numOfChildren = 1;
     children[0] = children[index];
-    if (index != 0)
-    {
-        children[index] = NULL;
-    }
     
     // Extend the current tree by one
     this->extend();
@@ -278,17 +277,18 @@ Node* Node::advance(Move* opponentsMove)
     while(!done)
     {
         Move* move = children[counter]->getMove();
-        // Found the move. Counter now contains the index of the nextChild
-        if (move->x == opponentsMove->x && move->y == opponentsMove->y)
-        {
-            done = 1;
-        }
         // If the opponentsMove was null, the node containing the next
         // board is at children[0]
-        else if (opponentsMove == NULL)
+        if (opponentsMove == NULL)
         {
             done = 1;
         }
+        // Found the move. Counter now contains the index of the nextChild
+        else if (move->x == opponentsMove->x && move->y == opponentsMove->y)
+        {
+            done = 1;
+        }
+        
         else
         {
             counter++;
@@ -306,10 +306,6 @@ Node* Node::advance(Move* opponentsMove)
     // Make the only branch left the first branch
     numOfChildren = 1;
     children[0] = children[counter];
-    if (counter != 0)
-    {
-        children[counter] = NULL;
-    }
     
     // Extend the current tree by one
     this->extend();
