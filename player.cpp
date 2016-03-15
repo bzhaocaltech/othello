@@ -29,7 +29,7 @@ Player::Player(Side side) {
     {
         head = new Node(new Board(), side, opponentSide);
     }
-    // Make a depth two tree
+    // Make a depth four tree
     head->makeChildren(4);
     firstMove = 1;
 }
@@ -90,7 +90,7 @@ Node::Node(Board* board, Side side, Side moveSide)
     this->nextSide = moveSide;
     
     // Set up children
-    children = new Node*[32];
+    children = new Node*[26];
     numOfChildren = 0;
 }
 
@@ -110,7 +110,7 @@ Node::Node(Board* board, Move* move, Side moveSide, Side scoreSide)
     this->move = move;
     
     // Set up children
-    children = new Node*[32];
+    children = new Node*[26];
     numOfChildren = 0;
 }
 
