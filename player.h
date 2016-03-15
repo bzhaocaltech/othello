@@ -28,7 +28,7 @@ public:
     // The number of nodes contained in children
     int numOfChildren;
     
-    Node(Board* board, Side side);
+    Node(Board* board, Side side, Side moveSide);
     Node(Board* board, Move* move, Side moveSide, Side scoreSide);
     ~Node();
     void deleteAll();
