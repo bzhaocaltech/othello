@@ -30,7 +30,7 @@ Player::Player(Side side) {
         head = new Node(new Board(), side, opponentSide);
     }
     // Make a depth two tree
-    head->makeChildren(2);
+    head->makeChildren(4);
     firstMove = 1;
 }
 
@@ -189,6 +189,14 @@ void Node::worstChild()
         }
         // Finally, update this node's score to the worst score
         score = worstScore;
+        if(nextSide == side)
+        {
+            score += numOfChildren/3;
+        }
+        else
+        {
+            score -= numOfChildren/3;
+        }
     }
 }
 
