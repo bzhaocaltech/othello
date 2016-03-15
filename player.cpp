@@ -21,9 +21,16 @@ Player::Player(Side side) {
     
     opponentSide = (side == BLACK) ? WHITE : BLACK;
     
-    head = new Node(new Board(), side);
+    if (side == BLACK)
+    {
+        head = new Node(new Board(), side, side);
+    }
+    else
+    {
+        head = new Node(new Board(), side, opponentSide);
+    }
     // Make a depth two tree
-    head->makeChildren(4);
+    head->makeChildren(2);
 }
 
 /*
@@ -52,19 +59,19 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     if (opponentsMove != NULL)
     {
         newHead = head->advance(opponentsMove);
-        //delete(head);
+        delete(head);
         head = newHead;
     }
     
     newHead = head->advance();
-    //delete(head);
+    delete(head);
     head = newHead;
     
     return (head->getMove());
 }
 
 // Creates a new node object.
-Node::Node(Board* board, Side side)
+Node::Node(Board* board, Side side, Side moveSide)
 {
 	// Set up the board
     this->board = board;
@@ -72,7 +79,7 @@ Node::Node(Board* board, Side side)
     
     move = NULL;
     this->side = side;
-    this->nextSide = side;
+    this->nextSide = moveSide;
     
     // Set up children
     children = new Node*[32];
@@ -117,7 +124,7 @@ void Node::deleteAll()
 	{
 		children[i]->deleteAll();
 	}
-    //delete(this);
+    // delete(this);
 }
 
 // Makes the children of this node to a certain depth
@@ -137,6 +144,18 @@ void Node::makeChildren(int depth)
         
             // Update numOfChildren to continue iterating through the loop
             numOfChildren++;
+        }
+        
+        // Fix to ensure tree does not stop if opponent passes a null move
+        if (numOfChildren == 0)
+        {
+            if (!board->isDone())
+            {
+                children[0] = new Node(board->copy(), NULL, nextSide, side);
+            }
+            children[0]->makeChildren(1);
+            numOfChildren++;
+            fprintf(stderr, "hi");
         }
     }
 }
@@ -218,7 +237,7 @@ Node* Node::advance()
 {
     this->worstChild();
     int index = bestMove();
-        for (int i = 0; i < numOfChildren; i++)
+    for (int i = 0; i < numOfChildren; i++)
     {
         // Delete all other branches
         if (i != index)
@@ -251,6 +270,12 @@ Node* Node::advance(Move* opponentsMove)
         Move* move = children[counter]->getMove();
         // Found the move. Counter now contains the index of the nextChild
         if (move->x == opponentsMove->x && move->y == opponentsMove->y)
+        {
+            done = 1;
+        }
+        // If the opponentsMove was null, the node containing the next
+        // board is at children[0]
+        else if (opponentsMove == NULL)
         {
             done = 1;
         }
